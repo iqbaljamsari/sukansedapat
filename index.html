@@ -1,0 +1,663 @@
+
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#10213b">
+  <title>Portal Sukan Sekolah | SK Seri Mendapat</title>
+
+  <style>
+    :root {
+      --navy: #10213b;
+      --navy-light: #1b3457;
+      --gold: #d9ad54;
+      --bg: #f4f6fa;
+      --white: #ffffff;
+      --text: #24334a;
+      --muted: #8290a4;
+      --border: #e8edf3;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    button, select { font: inherit; }
+
+    .sidebar {
+      position: fixed;
+      inset: 0 auto 0 0;
+      width: 255px;
+      background: var(--navy);
+      color: white;
+      padding: 25px 17px;
+      overflow-y: auto;
+      z-index: 10;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 5px 8px 27px;
+      border-bottom: 1px solid #ffffff20;
+    }
+
+    .logo {
+      width: 49px;
+      height: 49px;
+      border-radius: 13px;
+      background: #ffffff;
+      color: var(--navy);
+      display: grid;
+      place-items: center;
+      font-size: 14px;
+      font-weight: 900;
+      overflow: hidden;
+    }
+
+    .logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .brand h2 {
+      font-size: 14px;
+      margin: 0 0 4px;
+      letter-spacing: .4px;
+    }
+
+    .brand p {
+      color: #bdc9da;
+      font-size: 10px;
+      margin: 0;
+    }
+
+    .menu-label {
+      color: #91a4be;
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      margin: 27px 10px 10px;
+      font-weight: 700;
+    }
+
+    .nav-item {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      padding: 12px 13px;
+      margin: 4px 0;
+      color: #d4deeb;
+      text-decoration: none;
+      border-radius: 9px;
+      font-size: 13px;
+      transition: .2s;
+    }
+
+    .nav-item:hover, .nav-item.active {
+      background: var(--navy-light);
+      color: white;
+    }
+
+    .nav-item.active {
+      border-left: 3px solid var(--gold);
+    }
+
+    .nav-icon {
+      width: 20px;
+      text-align: center;
+      font-size: 16px;
+    }
+
+    .sidebar-footer {
+      margin: 35px 8px 5px;
+      padding-top: 18px;
+      border-top: 1px solid #ffffff20;
+      color: #a9b8cb;
+      font-size: 10px;
+      line-height: 1.8;
+    }
+
+    .main {
+      margin-left: 255px;
+      min-height: 100vh;
+    }
+
+    .topbar {
+      height: 72px;
+      background: white;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 35px;
+    }
+
+    .topbar-title {
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+    }
+
+    .public-tag {
+      background: #e8f6ed;
+      color: #26834a;
+      padding: 7px 11px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .login-btn {
+      border: 1px solid var(--border);
+      background: white;
+      border-radius: 8px;
+      padding: 9px 14px;
+      color: var(--navy);
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 12px;
+    }
+
+    .content {
+      max-width: 1250px;
+      margin: auto;
+      padding: 32px 35px 50px;
+    }
+
+    .welcome {
+      background: linear-gradient(120deg, #10213b, #24456d);
+      color: white;
+      border-radius: 16px;
+      padding: 35px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .welcome:after {
+      content: "SPORTS";
+      position: absolute;
+      right: -5px;
+      bottom: -24px;
+      font-size: 90px;
+      font-weight: 900;
+      color: #ffffff09;
+      letter-spacing: 4px;
+    }
+
+    .eyebrow {
+      color: var(--gold);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 2px;
+    }
+
+    .welcome h1 {
+      font-size: clamp(23px, 3vw, 34px);
+      margin: 13px 0 9px;
+      line-height: 1.2;
+    }
+
+    .welcome p {
+      color: #d0dbea;
+      font-size: 13px;
+      max-width: 550px;
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    .year-box {
+      margin-top: 24px;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: #ffffff16;
+      padding: 10px 13px;
+      border: 1px solid #ffffff25;
+      border-radius: 9px;
+      font-size: 12px;
+    }
+
+    .year-box select {
+      background: white;
+      border: none;
+      padding: 7px 10px;
+      border-radius: 6px;
+      color: var(--navy);
+      font-weight: 700;
+    }
+
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 30px 0 16px;
+    }
+
+    .section-title h2 {
+      font-size: 17px;
+      margin: 0;
+    }
+
+    .section-title p {
+      color: var(--muted);
+      font-size: 11px;
+      margin: 5px 0 0;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+    }
+
+    .stat {
+      background: white;
+      padding: 19px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+
+    .stat-icon {
+      width: 37px;
+      height: 37px;
+      display: grid;
+      place-items: center;
+      background: #f1f4f9;
+      border-radius: 10px;
+      font-size: 18px;
+    }
+
+    .stat h3 {
+      font-size: 25px;
+      margin: 16px 0 4px;
+      color: var(--navy);
+    }
+
+    .stat p {
+      font-size: 11px;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .activities {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+    }
+
+    .activity {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      transition: .2s;
+    }
+
+    .activity:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px #10213b0c;
+    }
+
+    .activity-icon {
+      width: 43px;
+      height: 43px;
+      border-radius: 11px;
+      display: grid;
+      place-items: center;
+      font-size: 21px;
+      background: #f0f3f9;
+    }
+
+    .activity h3 {
+      font-size: 14px;
+      margin: 16px 0 7px;
+    }
+
+    .activity p {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.7;
+      min-height: 38px;
+      margin: 0 0 17px;
+    }
+
+    .activity a {
+      color: #315d93;
+      font-size: 11px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .houses {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+    }
+
+    .house {
+      border-radius: 12px;
+      padding: 19px;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .house h3 { margin: 0; font-size: 15px; }
+    .house p { margin: 5px 0 0; font-size: 11px; opacity: .85; }
+    .house-icon { font-size: 27px; }
+
+    .tango { background: #2458b7; }
+    .oscar { background: #b83b40; }
+    .bravo { background: #bd8b20; }
+
+    .notice {
+      margin-top: 25px;
+      background: #fff9eb;
+      border: 1px solid #f0e2bc;
+      padding: 15px 18px;
+      border-radius: 10px;
+      color: #80652d;
+      font-size: 11px;
+      line-height: 1.7;
+    }
+
+    footer {
+      padding: 20px 0;
+      margin-top: 35px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 10px;
+      text-align: center;
+    }
+
+    .mobile-menu { display: none; }
+
+    @media(max-width: 950px) {
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .activities { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media(max-width: 650px) {
+      .sidebar {
+        width: 245px;
+        transform: translateX(-100%);
+        transition: .25s;
+      }
+
+      .sidebar.open { transform: translateX(0); }
+      .main { margin-left: 0; }
+
+      .topbar { padding: 0 16px; height: 62px; }
+      .mobile-menu { display: inline-block; border: 0; background: none; font-size: 23px; cursor: pointer; }
+      .content { padding: 20px 15px 35px; }
+      .welcome { padding: 25px 20px; }
+      .welcome:after { font-size: 50px; }
+      .activities { grid-template-columns: 1fr; }
+      .houses { grid-template-columns: 1fr; }
+      .public-tag { display: none; }
+      .topbar-title { font-size: 11px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="logo">
+  <img src="logo-sekolah.jpeg" alt="Logo SK Seri Mendapat">
+</div>
+      <div>
+        <h2>PORTAL SUKAN</h2>
+        <p>SK SERI MENDAPAT</p>
+      </div>
+    </div>
+
+    <div class="menu-label">MENU UTAMA</div>
+    <a href="#utama" class="nav-item active"><span class="nav-icon">⌂</span> Dashboard</a>
+    <a href="#aktiviti" class="nav-item"><span class="nav-icon">▦</span> Aktiviti Sukan</a>
+    <a href="#pertandingan" class="nav-item"><span class="nav-icon">🏆</span> Pertandingan</a>
+
+    <div class="menu-label">PENGURUSAN</div>
+    <a href="#" class="nav-item" onclick="loginNotice(event)"><span class="nav-icon">♙</span> Database Murid</a>
+    <a href="#" class="nav-item" onclick="loginNotice(event)"><span class="nav-icon">▤</span> Rekod Keputusan</a>
+    <a href="#rumah" class="nav-item"><span class="nav-icon">⚑</span> Rumah Sukan</a>
+
+    <div class="menu-label">DOKUMENTASI</div>
+    <a href="#dokumentasi" class="nav-item"><span class="nav-icon">▧</span> Laporan & Arkib</a>
+
+    <div class="sidebar-footer">
+      PORTAL SUKAN SEKOLAH<br>
+      SK SERI MENDAPAT<br>
+      Sistem Pengurusan Sukan
+    </div>
+  </aside>
+
+  <main class="main" id="utama">
+    <header class="topbar">
+      <div style="display:flex;align-items:center;gap:12px">
+        <button class="mobile-menu" onclick="toggleMenu()">☰</button>
+        <div class="topbar-title">Portal Pengurusan Sukan Sekolah</div>
+      </div>
+      <div class="top-actions">
+        <span class="public-tag">● PAPARAN UMUM</span>
+        <button class="login-btn" onclick="loginNotice()">Log Masuk Guru ↗</button>
+      </div>
+    </header>
+
+    <div class="content">
+
+      <section class="welcome">
+        <div class="eyebrow">SELAMAT DATANG</div>
+        <h1>Portal Sukan Sekolah<br>SK Seri Mendapat</h1>
+        <p>
+          Pusat pengurusan aktiviti sukan, pertandingan,
+          penyertaan murid dan pencapaian rumah sukan sekolah.
+        </p>
+
+        <div class="year-box">
+          <span>TAHUN PENGURUSAN</span>
+          <select id="yearSelect" onchange="changeYear()">
+            <option>2026</option>
+            <option>2027</option>
+            <option>2028</option>
+          </select>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-title">
+          <div>
+            <h2>Ringkasan Pengurusan</h2>
+            <p>Gambaran keseluruhan rekod bagi tahun dipilih.</p>
+          </div>
+        </div>
+
+        <div class="stats">
+          <div class="stat">
+            <div class="stat-icon">🏆</div>
+            <h3>—</h3>
+            <p>Jumlah aktiviti</p>
+          </div>
+          <div class="stat">
+            <div class="stat-icon">👥</div>
+            <h3>—</h3>
+            <p>Penyertaan murid</p>
+          </div>
+          <div class="stat">
+            <div class="stat-icon">🥇</div>
+            <h3>—</h3>
+            <p>Rekod keputusan</p>
+          </div>
+          <div class="stat">
+            <div class="stat-icon">📅</div>
+            <h3>—</h3>
+            <p>Aktiviti selesai</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="aktiviti">
+        <div class="section-title">
+          <div>
+            <h2>Modul Aktiviti Sukan</h2>
+            <p>Pilih kategori untuk melihat pengurusan aktiviti.</p>
+          </div>
+        </div>
+
+        <div class="activities">
+          <article class="activity">
+            <div class="activity-icon">🎈</div>
+            <h3>Sukaneka</h3>
+            <p>Pengurusan permainan, peserta dan rekod markah sukaneka.</p>
+            <a href="#pertandingan">Lihat modul →</a>
+          </article>
+
+          <article class="activity">
+            <div class="activity-icon">🏃</div>
+            <h3>Olahraga</h3>
+            <p>Pengurusan acara larian, lompatan dan balingan.</p>
+            <a href="#pertandingan">Lihat modul →</a>
+          </article>
+
+          <article class="activity">
+            <div class="activity-icon">👟</div>
+            <h3>Merentas Desa</h3>
+            <p>Rekod peserta, masa dan kedudukan penamat.</p>
+            <a href="#pertandingan">Lihat modul →</a>
+          </article>
+
+          <article class="activity">
+            <div class="activity-icon">🏅</div>
+            <h3>Kejohanan Rumah Sukan</h3>
+            <p>Keputusan dan ranking mengikut kejohanan.</p>
+            <a href="#pertandingan">Lihat modul →</a>
+          </article>
+
+          <article class="activity">
+            <div class="activity-icon">⚡</div>
+            <h3>Sukan Tara</h3>
+            <p>Rekod pencapaian dan kedudukan peserta.</p>
+            <a href="#pertandingan">Lihat modul →</a>
+          </article>
+
+          <article class="activity">
+            <div class="activity-icon">⚽</div>
+            <h3>Kejohanan Permainan</h3>
+            <p>Pengurusan pertandingan antara rumah dan pasukan.</p>
+            <a href="#pertandingan">Lihat modul →</a>
+          </article>
+        </div>
+      </section>
+
+      <section id="rumah">
+        <div class="section-title">
+          <div>
+            <h2>Rumah Sukan</h2>
+            <p>Tiga rumah sukan rasmi SK Seri Mendapat.</p>
+          </div>
+        </div>
+
+        <div class="houses">
+          <div class="house tango">
+            <div><h3>TANGO</h3><p>Rumah Biru</p></div>
+            <div class="house-icon">🛡️</div>
+          </div>
+
+          <div class="house oscar">
+            <div><h3>OSCAR</h3><p>Rumah Merah</p></div>
+            <div class="house-icon">🛡️</div>
+          </div>
+
+          <div class="house bravo">
+            <div><h3>BRAVO</h3><p>Rumah Kuning</p></div>
+            <div class="house-icon">🛡️</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="pertandingan">
+        <div class="section-title">
+          <div>
+            <h2>Keputusan Pertandingan</h2>
+            <p>Ruang keputusan akan diaktifkan apabila modul pertandingan dibangunkan.</p>
+          </div>
+        </div>
+
+        <div class="notice">
+          <strong>Makluman:</strong> Portal sedang dalam peringkat pembangunan.
+          Rekod pertandingan, mata dan ranking akan dipaparkan selepas
+          data rasmi dimasukkan dan disahkan.
+        </div>
+      </section>
+
+      <section id="dokumentasi">
+        <div class="section-title">
+          <div>
+            <h2>Dokumentasi & Arkib</h2>
+            <p>Ruang penyimpanan laporan dan dokumentasi aktiviti sukan.</p>
+          </div>
+        </div>
+        <div class="notice">
+          Modul dokumentasi akan dibangunkan dalam fasa seterusnya.
+        </div>
+      </section>
+
+      <footer>
+        © <span id="currentYear"></span> PORTAL SUKAN SEKOLAH |
+        SK SERI MENDAPAT
+        <br>Direka untuk pengurusan sukan sekolah.
+      </footer>
+
+    </div>
+  </main>
+
+  <script>
+    document.getElementById("currentYear").textContent =
+      new Date().getFullYear();
+
+    function changeYear() {
+      const year = document.getElementById("yearSelect").value;
+      alert("Tahun pengurusan dipilih: " + year +
+        ". Data tahun ini akan dipaparkan selepas database diaktifkan.");
+    }
+
+    function toggleMenu() {
+      document.getElementById("sidebar").classList.toggle("open");
+    }
+
+    function loginNotice(event) {
+      if (event) event.preventDefault();
+      alert("Sistem log masuk guru akan diaktifkan selepas sambungan database Supabase.");
+    }
+
+    document.querySelectorAll(".nav-item").forEach(item => {
+      item.addEventListener("click", function() {
+        document.querySelectorAll(".nav-item").forEach(link =>
+          link.classList.remove("active")
+        );
+        this.classList.add("active");
+
+        if (window.innerWidth <= 650) {
+          document.getElementById("sidebar").classList.remove("open");
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
